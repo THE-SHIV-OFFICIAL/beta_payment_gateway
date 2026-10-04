@@ -6,5 +6,4 @@ COPY . .
 RUN mkdir -p data
 ENV PORT=4000 NODE_ENV=production
 EXPOSE 4000
-VOLUME ["/app/data"]
 CMD ["node", "server.js"]
