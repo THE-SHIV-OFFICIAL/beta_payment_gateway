@@ -76,7 +76,7 @@ app.post('/api/v1/auth/signup', limit(10, 60000), (req, res) => {
     id: 'usr_' + crypto.randomBytes(6).toString('hex'), name: clean(name), email: em,
     password: auth.hashPassword(password), storeName: clean(storeName) || clean(name),
     payoutUpi: payoutUpi ? payoutUpi.trim().toLowerCase() : '', webhookUrl: '',
-    apiKey: auth.token('bbh_live_'), status: 'active', createdAt: new Date().toISOString(),
+    apiKey: auth.token('ANJALI_'), status: 'active', createdAt: new Date().toISOString(),
   };
   D().users.push(user); db.save();
   mail.send(em, `Welcome to ${cfg.BRAND}`, mail.layout('Your account is ready', [
@@ -136,7 +136,7 @@ app.patch('/api/v1/me', auth.requireUser, (req, res) => {
 });
 
 app.post('/api/v1/me/rotate-key', auth.requireUser, (req, res) => {
-  req.user.apiKey = auth.token('bbh_live_'); db.save(); res.json({ success: true, user: publicUser(req.user) });
+  req.user.apiKey = auth.token('ANJALI_'); db.save(); res.json({ success: true, user: publicUser(req.user) });
 });
 
 app.get('/api/v1/me/orders', auth.requireUser, (req, res) => {
@@ -178,7 +178,7 @@ function createOrder(user, { amount, customerEmail, note }, req) {
   if (!cfg.UPI_ID) throw Object.assign(new Error('Payments are not configured yet.'), { status: 503 });
   const payAmount = uniquePayAmount(amt);
   if (!payAmount) throw Object.assign(new Error('Too many pending orders for this amount. Try again shortly.'), { status: 429 });
-  const orderId = 'BBH' + Date.now().toString(36).toUpperCase() + crypto.randomBytes(2).toString('hex').toUpperCase();
+  const orderId = 'SHIV' + Date.now().toString(36).toUpperCase() + crypto.randomBytes(2).toString('hex').toUpperCase();
   const commission = r2(payAmount * cfg.COMMISSION / 100);
   const upiUri = `upi://pay?pa=${encodeURIComponent(cfg.UPI_ID)}&pn=${encodeURIComponent(cfg.UPI_NAME)}&am=${payAmount.toFixed(2)}&tn=${encodeURIComponent(orderId)}&cu=INR`;
   const o = {
